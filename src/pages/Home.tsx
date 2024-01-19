@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { randomUUID } from "node:crypto";
 import {
   FlatList,
   Platform,
@@ -23,14 +22,18 @@ export function Home() {
   const [mySkills, setMySkills] = useState<Skill[]>([]);
   const [greeting, setGreeting] = useState("");
 
-  function handleAddNewSkill() {
+  async function handleAddNewSkill() {
     const data = {
-      id: randomUUID().toString(),
+      id: new Date().getTime().toString(),
       name: newSkill,
     };
 
     setMySkills((oldState) => [...oldState, data]);
     setNewSkill("");
+  }
+
+  function handleRemoveSkill(id: string) {
+    setMySkills((oldState) => oldState.filter((skill) => skill.id !== id));
   }
 
   useEffect(() => {
@@ -55,16 +58,22 @@ export function Home() {
         placeholder="New Skill"
         placeholderTextColor="#999"
         onChangeText={setNewSkill}
+        value={newSkill}
       />
 
-      <Button onPress={handleAddNewSkill} />
+      <Button title="Add" onPress={handleAddNewSkill} />
 
       <Text style={[styles.title, { marginVertical: 50 }]}>My Skills</Text>
 
       <FlatList
         data={mySkills}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <SkillCard skill={item.name} />}
+        renderItem={({ item }) => (
+          <SkillCard
+            skill={item.name}
+            onPress={() => handleRemoveSkill(item.id)}
+          />
+        )}
       />
     </View>
   );

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { randomUUID } from "node:crypto";
 import {
   FlatList,
   Platform,
@@ -11,13 +12,24 @@ import {
 import { Button } from "../components/Button";
 import { SkillCard } from "../components/SkillCard";
 
+interface Skill {
+  id: string;
+  name: string;
+  createdAt?: Date;
+}
+
 export function Home() {
   const [newSkill, setNewSkill] = useState("");
-  const [mySkills, setMySkills] = useState([]);
+  const [mySkills, setMySkills] = useState<Skill[]>([]);
   const [greeting, setGreeting] = useState("");
 
   function handleAddNewSkill() {
-    setMySkills((oldState) => [...oldState, newSkill]);
+    const data = {
+      id: randomUUID().toString(),
+      name: newSkill,
+    };
+
+    setMySkills((oldState) => [...oldState, data]);
     setNewSkill("");
   }
 
@@ -51,8 +63,8 @@ export function Home() {
 
       <FlatList
         data={mySkills}
-        keyExtractor={(item) => item}
-        renderItem={({ item }) => <SkillCard skill={item} />}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <SkillCard skill={item.name} />}
       />
     </View>
   );

@@ -2,7 +2,8 @@
 
 ## Sobre o projeto
 
-O projeto My Skills
+O projeto My Skills, é uma aplicação get started com React Native utilizando os conceitos mais básicos
+como hooks, estado, typescript, navegação é muito mais.
 
 ## Tecnologias
 

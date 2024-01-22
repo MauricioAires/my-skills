@@ -8,6 +8,7 @@ como hooks, estado, typescript, navegação é muito mais.
 ## Tecnologias
 
 - [React Native](https://reactnative.dev/)
+- [Flipper](https://fbflipper.com/docs/features/react-native/)
 
 ## Instalação
 
